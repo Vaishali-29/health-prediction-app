@@ -1,0 +1,144 @@
+
+{% extends "base.html" %}
+
+{% block title %}Add Patient | HealthPredict{% endblock %}
+
+{% block content %}
+
+<section class="form-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Add New Patient</h1>
+            <p>Enter patient details and blood test results.</p>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <form action="{{ url_for('add_patient') }}" method="POST">
+
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input
+                    type="text"
+                    id="full_name"
+                    name="full_name"
+                    value="{{ form_data.get('full_name', '') }}"
+                    placeholder="Enter full name"
+                    required
+                >
+                {% if errors.get('full_name') %}
+                    <small class="error">{{ errors.full_name }}</small>
+                {% endif %}
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input
+                    type="text"
+                    id="dob"
+                    name="dob"
+                    value="{{ form_data.get('dob', '') }}"
+                    placeholder="DD/MM/YYYY"
+                    required
+                >
+                {% if errors.get('dob') %}
+                    <small class="error">{{ errors.dob }}</small>
+                {% endif %}
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="{{ form_data.get('email', '') }}"
+                    placeholder="example@email.com"
+                    required
+                >
+                {% if errors.get('email') %}
+                    <small class="error">{{ errors.email }}</small>
+                {% endif %}
+            </div>
+
+            <h3 class="form-subtitle">Blood Test Results</h3>
+
+            <!-- Glucose -->
+            <div class="form-group">
+                <label for="glucose">Glucose</label>
+                <input
+                    type="number"
+                    step="any"
+                    id="glucose"
+                    name="glucose"
+                    value="{{ form_data.get('glucose', '') }}"
+                    placeholder="Enter glucose value"
+                    required
+                >
+                {% if errors.get('glucose') %}
+                    <small class="error">{{ errors.glucose }}</small>
+                {% endif %}
+            </div>
+
+            <!-- Haemoglobin -->
+            <div class="form-group">
+                <label for="haemoglobin">Haemoglobin</label>
+                <input
+                    type="number"
+                    step="any"
+                    id="haemoglobin"
+                    name="haemoglobin"
+                    value="{{ form_data.get('haemoglobin', '') }}"
+                    placeholder="Enter haemoglobin value"
+                    required
+                >
+                {% if errors.get('haemoglobin') %}
+                    <small class="error">{{ errors.haemoglobin }}</small>
+                {% endif %}
+            </div>
+
+            <!-- Cholesterol -->
+            <div class="form-group">
+                <label for="cholesterol">Cholesterol</label>
+                <input
+                    type="number"
+                    step="any"
+                    id="cholesterol"
+                    name="cholesterol"
+                    value="{{ form_data.get('cholesterol', '') }}"
+                    placeholder="Enter cholesterol value"
+                    required
+                >
+                {% if errors.get('cholesterol') %}
+                    <small class="error">{{ errors.cholesterol }}</small>
+                {% endif %}
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    Save Patient
+                </button>
+
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}
+

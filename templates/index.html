@@ -1,0 +1,107 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | HealthPredict{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div>
+        <h1>Patient Dashboard</h1>
+        <p>Manage patient records and view AI-generated health remarks.</p>
+    </div>
+
+    <a href="{{ url_for('add_patient') }}" class="btn btn-primary">
+        + Add New Patient
+    </a>
+</section>
+
+<section class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Patients</h3>
+        <p class="stat-number">{{ patients|length }}</p>
+    </div>
+</section>
+
+<section class="table-section">
+
+    <h2>Patient Records</h2>
+
+    {% if patients %}
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Date of Birth</th>
+                    <th>Email</th>
+                    <th>Glucose</th>
+                    <th>Haemoglobin</th>
+                    <th>Cholesterol</th>
+                    <th>AI Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.full_name }}</td>
+                    <td>{{ patient.dob }}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.glucose }}</td>
+                    <td>{{ patient.haemoglobin }}</td>
+                    <td>{{ patient.cholesterol }}</td>
+
+                    <td class="remarks-cell">
+                        {{ patient.remarks or "Not available" }}
+                    </td>
+
+                    <td>
+                        <div class="action-buttons">
+
+                            <a
+                                href="{{ url_for('edit_patient', patient_id=patient.id) }}"
+                                class="btn btn-edit"
+                            >
+                                Edit
+                            </a>
+
+                            <form
+                                action="{{ url_for('delete_patient', patient_id=patient.id) }}"
+                                method="POST"
+                                class="delete-form"
+                            >
+                                <button type="submit" class="btn btn-delete">
+                                    Delete
+                                </button>
+                            </form>
+
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+        <h3>No patient records found</h3>
+        <p>Add your first patient to get started.</p>
+
+        <a href="{{ url_for('add_patient') }}" class="btn btn-primary">
+            Add Patient
+        </a>
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
